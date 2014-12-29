@@ -7,6 +7,7 @@
 //
 
 #import "ImageCollectionViewController.h"
+#import "ImagePickerCell.h"
 
 @interface ImageCollectionViewController ()
 
@@ -23,32 +24,94 @@ static NSString * const reuseIdentifier = @"Cell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[ImagePickerCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    self.navigationItem.title = @"Select Photos";
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPhotoSelection)];
+    self.navigationItem.rightBarButtonItem = cancel;
     
+    selectedStateArray = [[NSMutableArray alloc]init];
     // Do any additional setup after loading the view.
+}
+
+-(void)cancelPhotoSelection{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    
-    if (!self.assets) {
-        _assets = [[NSMutableArray alloc] init];
+    if (self.assetsLibrary == nil) {
+        _assetsLibrary = [[ALAssetsLibrary alloc] init];
+    }
+    if (self.groups == nil) {
+        _groups = [[NSMutableArray alloc] init];
     } else {
-        [self.assets removeAllObjects];
+        [self.groups removeAllObjects];
     }
     
-    ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+    // setup our failure view controller in case enumerateGroupsWithTypes fails
+    ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *error) {
         
-        if (result) {
-            [self.assets addObject:result];
+//        AssetsDataIsInaccessibleViewController *assetsDataInaccessibleViewController =
+//        [self.storyboard instantiateViewControllerWithIdentifier:@"inaccessibleViewController"];
+        
+        NSString *errorMessage = nil;
+        switch ([error code]) {
+            case ALAssetsLibraryAccessUserDeniedError:
+            case ALAssetsLibraryAccessGloballyDeniedError:
+                errorMessage = @"The user has declined access to it.";
+                break;
+            default:
+                errorMessage = @"Reason unknown.";
+                break;
         }
+        
+//        assetsDataInaccessibleViewController.explanation = errorMessage;
+//        [self presentViewController:assetsDataInaccessibleViewController animated:NO completion:nil];
     };
     
-    ALAssetsFilter *onlyPhotosFilter = [ALAssetsFilter allPhotos];
-    [self.assetsGroup setAssetsFilter:onlyPhotosFilter];
-    [self.assetsGroup enumerateAssetsUsingBlock:assetsEnumerationBlock];
+    // emumerate through our groups and only add groups that contain photos
+    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop) {
+        
+        ALAssetsFilter *onlyPhotosFilter = [ALAssetsFilter allPhotos];
+        [group setAssetsFilter:onlyPhotosFilter];
+        if ([group numberOfAssets] > 0)
+        {   self.assetsGroup = group;
+           // self.title = [self.assetsGroup valueForProperty:ALAssetsGroupPropertyName];
+            
+            if (!self.assets) {
+                _assets = [[NSMutableArray alloc] init];
+            } else {
+                [self.assets removeAllObjects];
+            }
+            
+            ALAssetsFilter *onlyPhotosFilter = [ALAssetsFilter allPhotos];
+            [self.assetsGroup setAssetsFilter:onlyPhotosFilter];
+            ALAssetsGroupEnumerationResultsBlock assetsEnumerationBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                
+                if (result) {
+                    [selectedStateArray  addObject:[NSNumber numberWithBool:false]];
+                    [self.assets addObject:result];
+                }
+            };
+            
+            
+            [self.assetsGroup enumerateAssetsUsingBlock:assetsEnumerationBlock];
+        }
+      
+    };
+    
+    // enumerate only photos
+    NSUInteger groupTypes = ALAssetsGroupAlbum | ALAssetsGroupEvent | ALAssetsGroupFaces | ALAssetsGroupSavedPhotos;
+    [self.assetsLibrary enumerateGroupsWithTypes:groupTypes usingBlock:listGroupBlock failureBlock:failureBlock];
+
+    
+    
+    
+//    self.assetsGroup = [[ALAssetsGroup alloc]init];
+   
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -62,7 +125,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     
-    return self.assets.count;
+     return self.assets.count;
 }
 
 #define kImageViewTag 1 // the image view inside the collection view cell prototype is tagged with "1"
@@ -71,7 +134,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
     static NSString *CellIdentifier = @"photoCell";
     
-    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
+    ImagePickerCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // load the asset for this cell
     ALAsset *asset = self.assets[indexPath.row];
@@ -79,11 +142,24 @@ static NSString * const reuseIdentifier = @"Cell";
     UIImage *thumbnail = [UIImage imageWithCGImage:thumbnailImageRef];
     
     // apply the image to the cell
-    UIImageView *imageView = (UIImageView *)[cell viewWithTag:kImageViewTag];
-    imageView.image = thumbnail;
+ //   UIImageView *imageView = (UIImageView *)[cell viewWithTag:kImageViewTag];
+    cell.thumbImage.image = thumbnail;
+    BOOL selected = [[selectedStateArray objectAtIndex:indexPath.row ] boolValue];
+    if(!selected )
+        cell.selectedView.hidden = YES;
+    else
+        cell.selectedView.hidden = NO;
     
     return cell;
 }
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [selectedStateArray  replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:![[selectedStateArray objectAtIndex:indexPath.row ] boolValue] ]];
+    [self.collectionView reloadData];
+}
+
+
+
 
 
 - (void)didReceiveMemoryWarning {
@@ -151,6 +227,11 @@ static NSString * const reuseIdentifier = @"Cell";
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
 	
 }
+ 
+ - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+ 
+ 
+ }
 */
 
 @end
