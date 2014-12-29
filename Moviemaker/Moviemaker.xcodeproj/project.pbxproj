@@ -14,6 +14,10 @@
 		0770A0E31A49E53F00373773 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0770A0E21A49E53F00373773 /* Images.xcassets */; };
 		0770A0E61A49E53F00373773 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0770A0E41A49E53F00373773 /* LaunchScreen.xib */; };
 		0770A0F21A49E54000373773 /* MoviemakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0770A0F11A49E54000373773 /* MoviemakerTests.m */; };
+		0770A0FC1A49EC8400373773 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0770A0FB1A49EC8400373773 /* AssetsLibrary.framework */; };
+		0770A1001A49ED4200373773 /* ImageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0770A0FF1A49ED4200373773 /* ImageCollectionViewController.m */; };
+		0779D5C11A507981005230BC /* ImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0779D5C01A507981005230BC /* ImagePickerCell.m */; };
+		0779D5C41A51D85A005230BC /* ImageAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 0779D5C31A51D85A005230BC /* ImageAsset.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,13 @@
 		0770A0EB1A49E54000373773 /* MoviemakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoviemakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0770A0F01A49E54000373773 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0770A0F11A49E54000373773 /* MoviemakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoviemakerTests.m; sourceTree = "<group>"; };
+		0770A0FB1A49EC8400373773 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		0770A0FE1A49ED4200373773 /* ImageCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewController.h; sourceTree = "<group>"; };
+		0770A0FF1A49ED4200373773 /* ImageCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewController.m; sourceTree = "<group>"; };
+		0779D5BF1A507981005230BC /* ImagePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerCell.h; sourceTree = "<group>"; };
+		0779D5C01A507981005230BC /* ImagePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerCell.m; sourceTree = "<group>"; };
+		0779D5C21A51D85A005230BC /* ImageAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageAsset.h; sourceTree = "<group>"; };
+		0779D5C31A51D85A005230BC /* ImageAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageAsset.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0770A0FC1A49EC8400373773 /* AssetsLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +75,7 @@
 		0770A0C91A49E53E00373773 = {
 			isa = PBXGroup;
 			children = (
+				0770A0FB1A49EC8400373773 /* AssetsLibrary.framework */,
 				0770A0D41A49E53F00373773 /* Moviemaker */,
 				0770A0EE1A49E54000373773 /* MoviemakerTests */,
 				0770A0D31A49E53F00373773 /* Products */,
@@ -86,9 +99,15 @@
 				0770A0DC1A49E53F00373773 /* ViewController.h */,
 				0770A0DD1A49E53F00373773 /* ViewController.m */,
 				0770A0DF1A49E53F00373773 /* Main.storyboard */,
-				0770A0E21A49E53F00373773 /* Images.xcassets */,
 				0770A0E41A49E53F00373773 /* LaunchScreen.xib */,
+				0770A0E21A49E53F00373773 /* Images.xcassets */,
 				0770A0D51A49E53F00373773 /* Supporting Files */,
+				0770A0FE1A49ED4200373773 /* ImageCollectionViewController.h */,
+				0770A0FF1A49ED4200373773 /* ImageCollectionViewController.m */,
+				0779D5BF1A507981005230BC /* ImagePickerCell.h */,
+				0779D5C01A507981005230BC /* ImagePickerCell.m */,
+				0779D5C21A51D85A005230BC /* ImageAsset.h */,
+				0779D5C31A51D85A005230BC /* ImageAsset.m */,
 			);
 			path = Moviemaker;
 			sourceTree = "<group>";
@@ -168,6 +187,7 @@
 				TargetAttributes = {
 					0770A0D11A49E53E00373773 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 2J8EQKN5KG;
 					};
 					0770A0EA1A49E54000373773 = {
 						CreatedOnToolsVersion = 6.1;
@@ -219,8 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0779D5C11A507981005230BC /* ImagePickerCell.m in Sources */,
+				0770A1001A49ED4200373773 /* ImageCollectionViewController.m in Sources */,
 				0770A0DE1A49E53F00373773 /* ViewController.m in Sources */,
 				0770A0DB1A49E53F00373773 /* AppDelegate.m in Sources */,
+				0779D5C41A51D85A005230BC /* ImageAsset.m in Sources */,
 				0770A0D81A49E53F00373773 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,7 +303,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Md. Belayet Hossain (AVL683FNDJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Md. Belayet Hossain (AVL683FNDJ)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -297,9 +321,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "00ADE47F-9E74-4E37-A2CC-CED851494F15";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -321,7 +346,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Md. Belayet Hossain (AVL683FNDJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Md. Belayet Hossain (AVL683FNDJ)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -332,8 +358,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "00ADE47F-9E74-4E37-A2CC-CED851494F15";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -343,9 +370,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Md. Belayet Hossain (AVL683FNDJ)";
 				INFOPLIST_FILE = Moviemaker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e547acdb-8a1c-4735-9fd6-767a251759a7";
 			};
 			name = Debug;
 		};
@@ -353,9 +384,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Md. Belayet Hossain (AVL683FNDJ)";
 				INFOPLIST_FILE = Moviemaker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "e547acdb-8a1c-4735-9fd6-767a251759a7";
 			};
 			name = Release;
 		};
@@ -412,6 +447,7 @@
 				0770A0F71A49E54000373773 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0770A0F81A49E54000373773 /* Build configuration list for PBXNativeTarget "MoviemakerTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +456,7 @@
 				0770A0FA1A49E54000373773 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
