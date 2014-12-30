@@ -27,7 +27,11 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[ImagePickerCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.navigationItem.title = @"Select Photos";
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPhotoSelection)];
-    self.navigationItem.rightBarButtonItem = cancel;
+    self.navigationItem.leftBarButtonItem = cancel;
+    
+//    UIBarButtonItem *next = [[UIBarButtonItem alloc]initWithTitle:@"Next" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelPhotoSelection)];
+//    self.navigationItem.rightBarButtonItem = next;
+
     
     selectedStateArray = [[NSMutableArray alloc]init];
     // Do any additional setup after loading the view.
@@ -147,8 +151,11 @@ static NSString * const reuseIdentifier = @"Cell";
     BOOL selected = [[selectedStateArray objectAtIndex:indexPath.row ] boolValue];
     if(!selected )
         cell.selectedView.hidden = YES;
-    else
+    else{
         cell.selectedView.hidden = NO;
+        UIImage *img = [UIImage imageNamed:@"Content"];
+        cell.selectedView.backgroundColor = [UIColor colorWithPatternImage:img];
+    }
     
     return cell;
 }
